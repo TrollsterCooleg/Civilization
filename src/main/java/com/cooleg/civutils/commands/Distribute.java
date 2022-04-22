@@ -19,6 +19,7 @@ public class Distribute {
             for (String string : civUtils.getConfig().getKeys(false)) {
                 String perm = "civ.team."+string;
                 if (p.hasPermission(perm)) {
+                    p.addScoreboardTag(string);
                     Double x = civUtils.getConfig().getDouble(string+".x");
                     Double y = civUtils.getConfig().getDouble(string+".y");
                     Double z = civUtils.getConfig().getDouble(string+".z");
