@@ -17,7 +17,7 @@ public final class CivUtils extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        System.out.println("CivUtils disabled.");
+
     }
 
 }
