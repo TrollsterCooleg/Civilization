@@ -8,6 +8,8 @@ public class SetPos {
     private Player p;
     private String[] args;
     public SetPos(String[] args, CivUtils civUtils, Player player) {
+        // Fucking constructor and location shit
+        // imma be real this is pretty basic shit
         this.civUtils = civUtils;
         this.p = player;
         this.args = args;
@@ -17,7 +19,7 @@ public class SetPos {
 
     public void saveLoc() {
         if (args.length < 3) {
-            System.out.println(args[1]);
+            // Pretty simple shit just saves coords to config.yml
             civUtils.getConfig().set(args[1]+".x", p.getLocation().getBlockX());
             civUtils.getConfig().set(args[1]+".y", p.getLocation().getBlockY());
             civUtils.getConfig().set(args[1]+".z", p.getLocation().getBlockZ());

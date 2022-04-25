@@ -11,10 +11,11 @@ import java.util.Set;
 
 public final class CivUtils extends JavaPlugin {
 
+    // Preps variables, such as border being on or off, the team cache,
+    // and also sets a variable for the borderUtils class beforehand conveniently
     public boolean enabled = false;
     public boolean border = false;
     public Set<String> teamCache;
-    public HashMap<Player, String> playerCache = new HashMap<>();
     public BorderUtils borderUtils;
 
     @Override

@@ -6,3 +6,4 @@ authors: [ Cooleg ]
 description: Utility plugin for quickly setting up a civilization event.
 commands:
   civutils:
+    aliases: [civ, civilization]

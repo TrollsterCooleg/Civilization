@@ -24,6 +24,8 @@ public class BorderUtils {
     }
 
     public void startBorder() {
+        // Caches border in hashmaps so that its faster
+        // and more reliable then reading from file every time
         for (String string : civUtils.teamCache) {
             try {
                 lowXMap.put(string, civUtils.getConfig().getDouble(string + ".lower-x"));
@@ -32,6 +34,9 @@ public class BorderUtils {
                 highZMap.put(string, civUtils.getConfig().getDouble(string + ".higher-z"));
             } catch (Exception e) {civUtils.getLogger().severe("Hey there bucko you are missing border coordinates and shit will probably break!!!!!! hahhahahahah");}
         }
+        // Marks the border being on as true, and starts a loop of it
+        // checking for players in each team
+        // and if they are within their border.
         civUtils.border = true;
         border = new BukkitRunnable() {
             @Override
@@ -64,6 +69,8 @@ public class BorderUtils {
         }.runTaskTimer(civUtils,20,40);
     }
 
+    // Literally cancels the runnable and marks border as off
+    // so that the toggles work. Not much here imma be real
     public void stopBorder() {
         civUtils.border = false;
         border.cancel();

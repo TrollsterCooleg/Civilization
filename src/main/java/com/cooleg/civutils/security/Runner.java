@@ -13,6 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// If you are reading this congrats i guess
+// but this isnt gonna be properly annotated.
+// coded this shit when i was first starting
+// and its a fucking messy ball of shit and
+// you werent meant to see this anyways. i dont
+// know why the fuck i used a runnable here, its
+// not looping or async im pretty sure i was just
+// learning them so it was a test or smthn
+// Point is this code is just fucking vile
+
+// Just realized why theres a runnable, I used AsyncPlayerChatEvent
+// and didnt know if these operations were thread safe or not
+// so i just made it sync. why didnt i just use playerchatevent?
+// I DONT KNOW
+
 public class Runner {
     public static List<Player> whitelisted = new ArrayList<>();
     public Runner(String cmd, Player player, Event e) {

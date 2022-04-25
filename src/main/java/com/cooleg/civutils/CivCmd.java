@@ -24,7 +24,11 @@ public class CivCmd implements CommandExecutor {
             sender.sendMessage(ChatColor.GOLD + "The commands are distribute, setpos, or reload.");
             return false;
         }
-
+        // Ahhh big ugly spagetti
+        // at least i used .toLowerCase
+        // Border toggles border, help shows cmd list, distribute
+        // distributes the players, setpos adds distribution positions
+        // and reload reloads the config. easy enough
         switch (args[0].toLowerCase()) {
             case ("border"):
                 if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled!");} else {borderUtils.startBorder(); sender.sendMessage(ChatColor.GOLD + "Border enabled!");}
