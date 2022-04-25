@@ -27,7 +27,7 @@ public class CivCmd implements CommandExecutor {
 
         switch (args[0].toLowerCase()) {
             case ("border"):
-                if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled!");} else {borderUtils.startBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled!");}
+                if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled!");} else {borderUtils.startBorder(); sender.sendMessage(ChatColor.GOLD + "Border enabled!");}
                 break;
             case ("help"):
                 sender.sendMessage("The commands are distribute, setpos, or reload.");
