@@ -41,7 +41,6 @@ public class CivCmd implements CommandExecutor {
                 break;
             case ("reload"):
                 civUtils.reloadConfig();
-                civUtils.cachePlayers.cacheAll();
                 civUtils.teamCache = civUtils.getConfig().getKeys(false);
                 sender.sendMessage(ChatColor.GOLD + "All configurations reloaded!");
                 break;
