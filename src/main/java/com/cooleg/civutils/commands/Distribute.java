@@ -11,18 +11,17 @@ public class Distribute {
     public Distribute(CivUtils civUtils) {
         this.civUtils = civUtils;
         spread();
-        return;
     }
 
     public void spread() {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            for (String string : civUtils.getConfig().getKeys(false)) {
+            for (String string : civUtils.teamCache) {
                 String perm = "civ.team."+string;
                 if (p.hasPermission(perm)) {
                     p.addScoreboardTag(string);
-                    Double x = civUtils.getConfig().getDouble(string+".x");
-                    Double y = civUtils.getConfig().getDouble(string+".y");
-                    Double z = civUtils.getConfig().getDouble(string+".z");
+                    double x = civUtils.getConfig().getDouble(string+".x");
+                    double y = civUtils.getConfig().getDouble(string+".y");
+                    double z = civUtils.getConfig().getDouble(string+".z");
                     World world = Bukkit.getWorld(civUtils.getConfig().getString(string+".world"));
                     Location loc = new Location(world,x,y,z);
                     p.teleport(loc);
@@ -32,7 +31,6 @@ public class Distribute {
             }
 
         }
-        return;
 
     }
 

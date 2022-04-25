@@ -1,6 +1,5 @@
 package com.cooleg.civutils.security;
 
-import com.cooleg.civutils.CivUtils;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
