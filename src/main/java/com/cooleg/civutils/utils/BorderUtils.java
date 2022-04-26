@@ -4,6 +4,7 @@ import com.cooleg.civutils.CivUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -27,11 +28,12 @@ public class BorderUtils {
         // Caches border in hashmaps so that its faster
         // and more reliable then reading from file every time
         for (String string : civUtils.teamCache) {
+            ConfigurationSection config = civUtils.getConfig().getConfigurationSection("teams");
             try {
-                lowXMap.put(string, civUtils.getConfig().getDouble(string + ".lower-x"));
-                highXMap.put(string, civUtils.getConfig().getDouble(string + ".higher-x"));
-                lowZMap.put(string, civUtils.getConfig().getDouble(string + ".lower-z"));
-                highZMap.put(string, civUtils.getConfig().getDouble(string + ".higher-z"));
+                lowXMap.put(string, config.getDouble(string + ".lower-x"));
+                highXMap.put(string, config.getDouble(string + ".higher-x"));
+                lowZMap.put(string, config.getDouble(string + ".lower-z"));
+                highZMap.put(string, config.getDouble(string + ".higher-z"));
             } catch (Exception e) {civUtils.getLogger().severe("Hey there bucko you are missing border coordinates and shit will probably break!!!!!! hahhahahahah");}
         }
         // Marks the border being on as true, and starts a loop of it

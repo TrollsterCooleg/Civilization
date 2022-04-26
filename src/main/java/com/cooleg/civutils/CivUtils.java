@@ -2,6 +2,7 @@ package com.cooleg.civutils;
 
 import com.cooleg.civutils.security.SecureHandler;
 import com.cooleg.civutils.utils.BorderUtils;
+import com.cooleg.civutils.utils.EventHandling;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,8 +24,13 @@ public final class CivUtils extends JavaPlugin {
         // Important Startup
         getConfig().options().copyDefaults();
         saveDefaultConfig();
-        teamCache = this.getConfig().getKeys(false);
+        try {
+            teamCache = this.getConfig().getConfigurationSection("teams").getKeys(false);
+        } catch (Exception e) {
+            this.getLogger().severe("Somethings wrong in the config.yml");
+        }
         borderUtils = new BorderUtils(this);
+        Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);
         Bukkit.getPluginManager().registerEvents(new SecureHandler(this), this);
         getCommand("civutils").setExecutor(new CivCmd(this,borderUtils));
     }

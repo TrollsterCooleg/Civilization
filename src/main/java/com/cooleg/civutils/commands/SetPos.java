@@ -1,6 +1,7 @@
 package com.cooleg.civutils.commands;
 
 import com.cooleg.civutils.CivUtils;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public class SetPos {
@@ -20,10 +21,10 @@ public class SetPos {
     public void saveLoc() {
         if (args.length < 3) {
             // Pretty simple shit just saves coords to config.yml
-            civUtils.getConfig().set(args[1]+".x", p.getLocation().getBlockX());
-            civUtils.getConfig().set(args[1]+".y", p.getLocation().getBlockY());
-            civUtils.getConfig().set(args[1]+".z", p.getLocation().getBlockZ());
-            civUtils.getConfig().set(args[1]+".world", p.getLocation().getWorld().getName());
+            civUtils.getConfig().set("teams."+args[1]+".x", p.getLocation().getBlockX());
+            civUtils.getConfig().set("teams."+args[1]+".y", p.getLocation().getBlockY());
+            civUtils.getConfig().set("teams."+args[1]+".z", p.getLocation().getBlockZ());
+            civUtils.getConfig().set("teams."+args[1]+".world", p.getLocation().getWorld().getName());
             civUtils.saveConfig();
             return;
         }

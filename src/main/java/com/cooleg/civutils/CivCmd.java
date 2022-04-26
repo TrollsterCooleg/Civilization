@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class CivCmd implements CommandExecutor {
     private CivUtils civUtils;
@@ -37,7 +38,7 @@ public class CivCmd implements CommandExecutor {
                 sender.sendMessage("The commands are distribute, setpos, or reload.");
                 break;
             case ("distribute"):
-                new com.cooleg.civutils.commands.Distribute(civUtils);
+                new com.cooleg.civutils.commands.Distribute(civUtils,sender);
                 sender.sendMessage(ChatColor.GOLD + "Players distributed!");
                 break;
             case ("setpos"):
@@ -45,7 +46,12 @@ public class CivCmd implements CommandExecutor {
                 break;
             case ("reload"):
                 civUtils.reloadConfig();
-                civUtils.teamCache = civUtils.getConfig().getKeys(false);
+                try {
+                    civUtils.teamCache = civUtils.getConfig().getConfigurationSection("teams").getKeys(false);
+                } catch (Exception e) {
+                    civUtils.getLogger().severe("Smthn isnt formatted correctly in the config.yml");
+                    sender.sendMessage("something isnt right in the config.yml");
+                }
                 sender.sendMessage(ChatColor.GOLD + "All configurations reloaded!");
                 break;
         }
