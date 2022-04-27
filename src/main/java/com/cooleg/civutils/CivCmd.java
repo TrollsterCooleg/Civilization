@@ -1,19 +1,21 @@
 package com.cooleg.civutils;
 
+import com.cooleg.civutils.commands.TeamAssign;
 import com.cooleg.civutils.utils.BorderUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class CivCmd implements CommandExecutor {
     private CivUtils civUtils;
     private BorderUtils borderUtils;
-    public CivCmd(CivUtils civUtils, BorderUtils borderUtils) {
+    private TeamAssign teamAssign;
+    public CivCmd(CivUtils civUtils, BorderUtils borderUtils, TeamAssign teamAssign) {
         this.civUtils = civUtils;
         this.borderUtils = borderUtils;
+        this.teamAssign = teamAssign;
     }
 
     @Override
@@ -29,8 +31,11 @@ public class CivCmd implements CommandExecutor {
         // at least i used .toLowerCase
         // Border toggles border, help shows cmd list, distribute
         // distributes the players, setpos adds distribution positions
-        // and reload reloads the config. easy enough
+        // assign gives everyone a team and reload reloads the config. easy enough
         switch (args[0].toLowerCase()) {
+            case ("assignall"):
+                civUtils.teamAssign.AssignAll();
+                break;
             case ("border"):
                 if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled!");} else {borderUtils.startBorder(); sender.sendMessage(ChatColor.GOLD + "Border enabled!");}
                 break;
