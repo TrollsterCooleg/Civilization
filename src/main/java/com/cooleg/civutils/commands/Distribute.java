@@ -4,6 +4,7 @@ import com.cooleg.civutils.CivUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class Distribute {
                     double x = config.getDouble(string+".x");
                     double y = config.getDouble(string+".y");
                     double z = config.getDouble(string+".z");
+                    Bukkit.createWorld(new WorldCreator(config.getString(string+".world")));
                     World world = Bukkit.getWorld(config.getString(string+".world"));
                     Location loc = new Location(world,x,y,z);
                     p.teleport(loc);
