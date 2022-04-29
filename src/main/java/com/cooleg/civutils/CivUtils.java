@@ -1,7 +1,6 @@
 package com.cooleg.civutils;
 
 import com.cooleg.civutils.commands.TeamAssign;
-import com.cooleg.civutils.security.SecureHandler;
 import com.cooleg.civutils.utils.BorderUtils;
 import com.cooleg.civutils.utils.EventHandling;
 import net.luckperms.api.LuckPerms;
@@ -18,7 +17,6 @@ public final class CivUtils extends JavaPlugin {
 
     // Preps variables, such as border being on or off, the team cache,
     // and also sets a variable for the borderUtils class beforehand conveniently
-    public boolean enabled = false;
     public boolean border = false;
     public Set<String> teamCache;
     public BorderUtils borderUtils;
@@ -41,7 +39,6 @@ public final class CivUtils extends JavaPlugin {
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {api = provider.getProvider();}
         Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);
-        Bukkit.getPluginManager().registerEvents(new SecureHandler(this), this);
         getCommand("civutils").setExecutor(new CivCmd(this,borderUtils,teamAssign));
     }
 
