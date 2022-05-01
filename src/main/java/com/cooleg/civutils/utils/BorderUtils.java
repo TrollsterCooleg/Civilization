@@ -4,6 +4,7 @@ import com.cooleg.civutils.CivUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,17 +25,43 @@ public class BorderUtils {
         this.civUtils = civUtils;
     }
 
-    public void startBorder() {
+    public void startBorder(CommandSender sender) {
         // Caches border in hashmaps so that its faster
         // and more reliable then reading from file every time
+        ConfigurationSection config = civUtils.getConfig().getConfigurationSection("teams");
         for (String string : civUtils.teamCache) {
-            ConfigurationSection config = civUtils.getConfig().getConfigurationSection("teams");
+            // Makes sure all the coordinates needed exist
+            if (!config.contains(string + ".lower-x") || !config.contains(string + ".higher-x") || !config.contains(string + ".lower-z") || !config.contains(string + ".higher-z")) {
+                civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu");
+                sender.sendMessage("Hey there man, you are missing a border coordinate for the team " + string + ", you better fix that.");
+                return;
+            }
             try {
                 lowXMap.put(string, config.getDouble(string + ".lower-x"));
                 highXMap.put(string, config.getDouble(string + ".higher-x"));
                 lowZMap.put(string, config.getDouble(string + ".lower-z"));
                 highZMap.put(string, config.getDouble(string + ".higher-z"));
-            } catch (Exception e) {civUtils.getLogger().severe("Hey there bucko you are missing border coordinates and shit will probably break!!!!!! hahhahahahah");}
+            } catch (Exception e) {sender.sendMessage("Hey there man, you are missing a border coordinate for the team " + string + ", you better fix that.");
+                civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu"); return;}
+            // Checks for coords in wrong order
+            if (lowXMap.get(string) > highXMap.get(string)) {
+                Double actualLow = highXMap.get(string);
+                Double actualHigh = lowXMap.get(string);
+                config.set(string+".lower-x", actualLow);
+                config.set(string+".higher-x", actualHigh);
+                civUtils.saveConfig();
+                lowXMap.put(string, actualLow);
+                lowXMap.put(string, actualHigh);
+            }
+            if (lowZMap.get(string) > highZMap.get(string)) {
+                Double actualLow = highZMap.get(string);
+                Double actualHigh = lowZMap.get(string);
+                config.set(string+".lower-z", actualLow);
+                config.set(string+".higher-z", actualHigh);
+                civUtils.saveConfig();
+                lowZMap.put(string, actualLow);
+                lowZMap.put(string, actualHigh);
+            }
         }
         // Marks the border being on as true, and starts a loop of it
         // checking for players in each team
