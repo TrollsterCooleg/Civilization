@@ -4,6 +4,7 @@ main: com.cooleg.civutils.CivUtils
 api-version: 1.18
 authors: [ Cooleg ]
 description: Utility plugin for quickly setting up a civilization event.
+softdepend: [LuckPerms]
 commands:
   civutils:
     aliases: [civ, civilization]

@@ -2,11 +2,22 @@ package com.cooleg.civutils.utils;
 
 
 import com.cooleg.civutils.CivUtils;
+import com.cooleg.civutils.commands.PvpToggle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.WorldCreator;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.inventory.Inventory;
+
+import java.util.List;
 
 public class EventHandling implements Listener {
 
@@ -14,6 +25,28 @@ public class EventHandling implements Listener {
 
     public EventHandling(CivUtils civUtils) {
         this.civUtils = civUtils;
+    }
+
+    @EventHandler
+    public void onLoad(WorldLoadEvent e) {
+        List<String> worlds = civUtils.getConfig().getStringList("worlds");
+        if (worlds.contains(e.getWorld().getName())) {return;}
+        worlds.add(e.getWorld().getName());
+        civUtils.getConfig().set("worlds", worlds);
+        civUtils.saveConfig();
+        return;
+    }
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_GREEN + "PVP Menu") && e.getCurrentItem() != null) {
+            if (e.getRawSlot() == 4) {
+                Player p = (Player) e.getWhoClicked();
+                PvpToggle pvpToggle = new PvpToggle();
+                pvpToggle.PvpToggle(p, civUtils);
+                pvpToggle.UpdateInventory(p, e);
+            }
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler

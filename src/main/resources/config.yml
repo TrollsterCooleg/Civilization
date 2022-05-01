@@ -3,3 +3,6 @@ teams:
 options:
   KickOnDeath: false
   UnWhitelistOnDeath: false
+  PVP: true
+
+worlds:

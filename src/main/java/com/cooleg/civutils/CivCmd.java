@@ -2,11 +2,14 @@ package com.cooleg.civutils;
 
 import com.cooleg.civutils.commands.TeamAssign;
 import com.cooleg.civutils.utils.BorderUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class CivCmd implements CommandExecutor {
     private CivUtils civUtils;
@@ -33,6 +36,11 @@ public class CivCmd implements CommandExecutor {
         // distributes the players, setpos adds distribution positions
         // assign gives everyone a team and reload reloads the config. easy enough
         switch (args[0].toLowerCase()) {
+            case ("pvp"):
+                if (sender instanceof Player) {
+                    new com.cooleg.civutils.commands.PvpToggle().pvpGui(((Player) sender).getPlayer());
+                }
+                break;
             case ("assignall"):
                 civUtils.teamAssign.AssignAll();
                 break;
@@ -51,6 +59,17 @@ public class CivCmd implements CommandExecutor {
                 break;
             case ("reload"):
                 civUtils.reloadConfig();
+                boolean pvp;
+                try {
+                    pvp = civUtils.getConfig().getBoolean("options.PVP");
+                } catch (Exception e) {
+                    civUtils.getConfig().set("options.PVP", true);
+                    civUtils.saveConfig();
+                    pvp = true;
+                }
+                for (World world : Bukkit.getWorlds()) {
+                    world.setPVP(pvp);
+                }
                 try {
                     civUtils.teamCache = civUtils.getConfig().getConfigurationSection("teams").getKeys(false);
                 } catch (Exception e) {
