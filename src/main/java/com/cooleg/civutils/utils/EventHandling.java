@@ -2,6 +2,7 @@ package com.cooleg.civutils.utils;
 
 
 import com.cooleg.civutils.CivUtils;
+import com.cooleg.civutils.commands.Manage;
 import com.cooleg.civutils.commands.PvpToggle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -47,6 +48,30 @@ public class EventHandling implements Listener {
             }
             e.setCancelled(true);
         }
+        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_GREEN + "Manager") && e.getCurrentItem() != null) {
+            if (e.getRawSlot() == 3) {
+                Player p = (Player) e.getWhoClicked();
+                PvpToggle pvpToggle = new PvpToggle();
+                pvpToggle.PvpToggle(p, civUtils);
+                Manage manage = new Manage();
+                manage.UpdatePvp(p, e);
+            }
+            e.setCancelled(true);
+        }
+        if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_GREEN + "Manager") && e.getCurrentItem() != null) {
+            if (e.getRawSlot() == 5) {
+                if (civUtils.border) {
+                    civUtils.borderUtils.stopBorder();
+                } else {
+                    civUtils.borderUtils.startBorder((Player) e.getWhoClicked());
+                }
+                Player p = (Player) e.getWhoClicked();
+                Manage manage = new Manage();
+                manage.UpdateBorder(e, civUtils);
+            }
+            e.setCancelled(true);
+        }
+        return;
     }
 
     @EventHandler
@@ -61,6 +86,7 @@ public class EventHandling implements Listener {
         } catch (Exception e) {
             Bukkit.getLogger().severe("Hey there man i would love to possibly kick or unwhitelist people but small problem your config is brokey");
         }
+        return;
 
     }
 

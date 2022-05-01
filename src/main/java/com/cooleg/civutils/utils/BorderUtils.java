@@ -27,7 +27,7 @@ public class BorderUtils {
         this.civUtils = civUtils;
     }
 
-    public void startBorder(CommandSender sender) {
+    public void startBorder(Player player) {
         // Caches border in hashmaps so that its faster
         // and more reliable then reading from file every time
         ConfigurationSection config = civUtils.getConfig().getConfigurationSection("teams");
@@ -35,7 +35,7 @@ public class BorderUtils {
             // Makes sure all the coordinates needed exist
             if (!config.contains(string + ".world") || !config.contains(string + ".lower-x") || !config.contains(string + ".higher-x") || !config.contains(string + ".lower-z") || !config.contains(string + ".higher-z")) {
                 civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates (or forgot to put the world in)! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu");
-                sender.sendMessage("Hey there man, you are missing a border coordinate (or world) for the team " + string + ", you better fix that.");
+                player.sendMessage("Hey there man, you are missing a border coordinate (or world) for the team " + string + ", you better fix that.");
                 return;
             }
             try {
@@ -44,7 +44,7 @@ public class BorderUtils {
                 lowZMap.put(string, config.getDouble(string + ".lower-z"));
                 highZMap.put(string, config.getDouble(string + ".higher-z"));
                 worldMap.put(string, Bukkit.getWorld(config.getString(string + ".world")));
-            } catch (Exception e) {sender.sendMessage("Hey there man, you are missing a border coordinate for the team " + string + ", you better fix that.");
+            } catch (Exception e) {player.sendMessage("Hey there man, you are missing a border coordinate for the team " + string + ", you better fix that.");
                 civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu"); return;}
             // Checks for coords in wrong order
             if (lowXMap.get(string) > highXMap.get(string)) {

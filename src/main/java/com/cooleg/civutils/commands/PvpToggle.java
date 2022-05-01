@@ -51,7 +51,6 @@ public class PvpToggle {
     }
 
     public void UpdateInventory (Player player, InventoryClickEvent e) {
-        Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_GREEN + "PVP Menu");
         ItemStack toggle;
         ItemMeta meta;
         if (player.getWorld().getPVP()) {

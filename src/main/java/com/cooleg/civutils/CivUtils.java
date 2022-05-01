@@ -27,10 +27,12 @@ public final class CivUtils extends JavaPlugin {
     public BorderUtils borderUtils;
     public TeamAssign teamAssign;
     public LuckPerms api;
+    static CivUtils instance;
 
     @Override
     public void onEnable() {
         // Important Startup
+        instance = this;
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         try {

@@ -36,6 +36,9 @@ public class CivCmd implements CommandExecutor {
         // distributes the players, setpos adds distribution positions
         // assign gives everyone a team and reload reloads the config. easy enough
         switch (args[0].toLowerCase()) {
+            case ("manage"):
+                if (sender instanceof Player) {new com.cooleg.civutils.commands.Manage().managerGui(((Player) sender).getPlayer(), civUtils);}
+                break;
             case ("pvp"):
                 if (sender instanceof Player) {
                     new com.cooleg.civutils.commands.PvpToggle().pvpGui(((Player) sender).getPlayer());
@@ -45,7 +48,8 @@ public class CivCmd implements CommandExecutor {
                 civUtils.teamAssign.AssignAll();
                 break;
             case ("border"):
-                if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled! (Unless it sent an error)");} else {borderUtils.startBorder(sender); sender.sendMessage(ChatColor.GOLD + "Border enabled! (Unless it sent an error)");}
+                if (!(sender instanceof Player)) {sender.sendMessage("This command must be ran as a player"); break;}
+                if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled! (Unless it sent an error)");} else {borderUtils.startBorder(((Player) sender).getPlayer()); sender.sendMessage(ChatColor.GOLD + "Border enabled! (Unless it sent an error)");}
                 break;
             case ("help"):
                 sender.sendMessage("The commands are distribute, setpos, or reload.");
