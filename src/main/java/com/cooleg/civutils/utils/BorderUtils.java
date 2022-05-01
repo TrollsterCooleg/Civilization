@@ -4,6 +4,7 @@ import com.cooleg.civutils.CivUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -20,6 +21,7 @@ public class BorderUtils {
     private HashMap<String, Double> highXMap = new HashMap<>();
     private HashMap<String, Double> lowZMap = new HashMap<>();
     private HashMap<String, Double> highZMap = new HashMap<>();
+    private HashMap<String, World> worldMap = new HashMap<>();
 
     public BorderUtils(CivUtils civUtils) {
         this.civUtils = civUtils;
@@ -31,9 +33,9 @@ public class BorderUtils {
         ConfigurationSection config = civUtils.getConfig().getConfigurationSection("teams");
         for (String string : civUtils.teamCache) {
             // Makes sure all the coordinates needed exist
-            if (!config.contains(string + ".lower-x") || !config.contains(string + ".higher-x") || !config.contains(string + ".lower-z") || !config.contains(string + ".higher-z")) {
-                civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu");
-                sender.sendMessage("Hey there man, you are missing a border coordinate for the team " + string + ", you better fix that.");
+            if (!config.contains(string + ".world") || !config.contains(string + ".lower-x") || !config.contains(string + ".higher-x") || !config.contains(string + ".lower-z") || !config.contains(string + ".higher-z")) {
+                civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates (or forgot to put the world in)! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu");
+                sender.sendMessage("Hey there man, you are missing a border coordinate (or world) for the team " + string + ", you better fix that.");
                 return;
             }
             try {
@@ -41,6 +43,7 @@ public class BorderUtils {
                 highXMap.put(string, config.getDouble(string + ".higher-x"));
                 lowZMap.put(string, config.getDouble(string + ".lower-z"));
                 highZMap.put(string, config.getDouble(string + ".higher-z"));
+                worldMap.put(string, Bukkit.getWorld(config.getString(string + ".world")));
             } catch (Exception e) {sender.sendMessage("Hey there man, you are missing a border coordinate for the team " + string + ", you better fix that.");
                 civUtils.getLogger().severe("Hey there bucko you are missing or messed up your border coordinates! Im turning the border thing off for your own good! Check the config for the team " + string + " please uwu"); return;}
             // Checks for coords in wrong order
@@ -77,18 +80,22 @@ public class BorderUtils {
                             Location playerLocation = p.getLocation();
                             if (playerLocation.getBlockX() < lowXMap.get(string)) {
                                 playerLocation.setX(lowXMap.get(string));
+                                playerLocation.setWorld(worldMap.get(string));
                                 p.teleport(playerLocation);
                             }
                             if (playerLocation.getBlockX() > highXMap.get(string)) {
                                 playerLocation.setX(highXMap.get(string)-1);
+                                playerLocation.setWorld(worldMap.get(string));
                                 p.teleport(playerLocation);
                             }
                             if (playerLocation.getBlockZ() < lowZMap.get(string)) {
                                 playerLocation.setZ(lowZMap.get(string));
+                                playerLocation.setWorld(worldMap.get(string));
                                 p.teleport(playerLocation);
                             }
                             if (playerLocation.getBlockZ() > highZMap.get(string)) {
                                 playerLocation.setZ(highZMap.get(string)-1);
+                                playerLocation.setWorld(worldMap.get(string));
                                 p.teleport(playerLocation);
                             }
                         }
