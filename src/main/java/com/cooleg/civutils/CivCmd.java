@@ -27,7 +27,7 @@ public class CivCmd implements CommandExecutor {
         if (sender instanceof Player && !sender.hasPermission("civ.commands")) {return false;}
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.GOLD + "The commands are distribute, setpos, or reload.");
+            sender.sendMessage(ChatColor.GOLD + "The commands are distribute, setpos, pvp, manage, border, or reload.");
             return false;
         }
         // Ahhh big ugly spagetti
