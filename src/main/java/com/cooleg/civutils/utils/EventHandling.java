@@ -6,17 +6,20 @@ import com.cooleg.civutils.commands.Manage;
 import com.cooleg.civutils.commands.PvpToggle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -28,6 +31,18 @@ public class EventHandling implements Listener {
         this.civUtils = civUtils;
     }
 
+    @EventHandler
+    public void craftAttempt(PrepareItemCraftEvent e) {
+        try {
+            for (Material material : civUtils.items) {
+                if (e.getRecipe().getResult().getType().equals(material)) {
+                    e.getInventory().setResult(new ItemStack(Material.AIR));
+                    return;
+                }
+            }
+        } catch (Exception exception) {}
+        return;
+    }
     @EventHandler
     public void onLoad(WorldLoadEvent e) {
         List<String> worlds = civUtils.getConfig().getStringList("worlds");

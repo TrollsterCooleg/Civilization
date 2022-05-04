@@ -1,14 +1,14 @@
 package com.cooleg.civutils;
 
 import com.cooleg.civutils.commands.TeamAssign;
+import com.cooleg.civutils.utils.BlockedCrafts;
 import com.cooleg.civutils.utils.BorderUtils;
 import com.cooleg.civutils.utils.EventHandling;
+import jdk.nashorn.internal.ir.Block;
 import net.luckperms.api.LuckPerms;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
@@ -25,8 +25,10 @@ public final class CivUtils extends JavaPlugin {
     public boolean border = false;
     public Set<String> teamCache;
     public BorderUtils borderUtils;
+    public BlockedCrafts blockedCrafts;
     public TeamAssign teamAssign;
     public LuckPerms api;
+    public List<Material> items = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -40,6 +42,8 @@ public final class CivUtils extends JavaPlugin {
         }
         borderUtils = new BorderUtils(this);
         teamAssign = new TeamAssign(this);
+        blockedCrafts = new BlockedCrafts(this);
+        blockedCrafts.refreshList();
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {api = provider.getProvider();}
         Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);

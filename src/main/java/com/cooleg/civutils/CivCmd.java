@@ -63,6 +63,7 @@ public class CivCmd implements CommandExecutor {
                 break;
             case ("reload"):
                 civUtils.reloadConfig();
+                civUtils.blockedCrafts.refreshList();
                 boolean pvp;
                 try {
                     pvp = civUtils.getConfig().getBoolean("options.PVP");

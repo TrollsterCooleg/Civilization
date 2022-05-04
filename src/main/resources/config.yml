@@ -1,5 +1,7 @@
 teams:
 
+blocked-crafts:
+
 options:
   KickOnDeath: false
   UnWhitelistOnDeath: false
