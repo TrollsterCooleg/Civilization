@@ -55,7 +55,7 @@ public class CivCmd implements CommandExecutor {
                 sender.sendMessage("The commands are distribute, setpos, or reload.");
                 break;
             case ("distribute"):
-                new com.cooleg.civutils.commands.Distribute(civUtils,sender);
+                new com.cooleg.civutils.commands.Distribute(civUtils);
                 sender.sendMessage(ChatColor.GOLD + "Players distributed!");
                 break;
             case ("setpos"):

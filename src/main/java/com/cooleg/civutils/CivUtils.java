@@ -1,5 +1,6 @@
 package com.cooleg.civutils;
 
+import com.cooleg.civutils.commands.Distribute;
 import com.cooleg.civutils.commands.TeamAssign;
 import com.cooleg.civutils.utils.BlockedCrafts;
 import com.cooleg.civutils.utils.BorderUtils;
@@ -25,6 +26,7 @@ public final class CivUtils extends JavaPlugin {
     public boolean border = false;
     public Set<String> teamCache;
     public BorderUtils borderUtils;
+    public Distribute distribute;
     public BlockedCrafts blockedCrafts;
     public TeamAssign teamAssign;
     public LuckPerms api;
@@ -41,6 +43,7 @@ public final class CivUtils extends JavaPlugin {
             this.getLogger().severe("Somethings wrong in the config.yml");
         }
         borderUtils = new BorderUtils(this);
+        distribute = new Distribute(this);
         teamAssign = new TeamAssign(this);
         blockedCrafts = new BlockedCrafts(this);
         blockedCrafts.refreshList();

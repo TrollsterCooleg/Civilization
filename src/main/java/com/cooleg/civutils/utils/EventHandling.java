@@ -1,7 +1,9 @@
 package com.cooleg.civutils.utils;
 
 
+import com.cooleg.civutils.CivCmd;
 import com.cooleg.civutils.CivUtils;
+import com.cooleg.civutils.commands.Distribute;
 import com.cooleg.civutils.commands.Manage;
 import com.cooleg.civutils.commands.PvpToggle;
 import org.bukkit.Bukkit;
@@ -17,6 +19,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +32,12 @@ public class EventHandling implements Listener {
 
     public EventHandling(CivUtils civUtils) {
         this.civUtils = civUtils;
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e) {
+        if (!civUtils.getConfig().getBoolean("options.ForcedSpawnPoint")) {return;}
+        e.setRespawnLocation(civUtils.distribute.getLocation(e.getPlayer()));
     }
 
     @EventHandler

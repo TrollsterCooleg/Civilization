@@ -11,39 +11,58 @@ import org.bukkit.entity.Player;
 
 public class Distribute {
     private CivUtils civUtils;
-    public Distribute(CivUtils civUtils, CommandSender sender) {
+    ConfigurationSection config;
+
+    public Distribute(CivUtils civUtils) {
         this.civUtils = civUtils;
-        try {spread();} catch (NullPointerException e) {sender.sendMessage("Dayum you yucky cause u put nothin in your config.yml you wierdo creep trying to send people to nowhere"); civUtils.getLogger().severe("Bro someone tried to send people places but there aint no places to send them what the hell lmao");}
+        config  = civUtils.getConfig().getConfigurationSection("teams");
     }
 
     // This took me so long because i was dumb as fuck and had to
     // think of a system to do this shit.
     // Imma be real tho it was easy in the end
     public void spread() {
-        ConfigurationSection config = civUtils.getConfig().getConfigurationSection("teams");
         for (Player p : Bukkit.getOnlinePlayers()) {
-            for (String string : civUtils.teamCache) {
-                // just sets the permission node needed beforehand
-                // cause for some reaosn its unreliable otherwise
-                String perm = "civ.team."+string;
-                if (p.hasPermission(perm)) {
-                    // Adds a tag for commands or stuff do do mid event for each team.
-                    p.addScoreboardTag(string);
-                    // Just grabs the coords and tps people it aint that much
+            TeleportPlayer(p);
+        }
+    }
+
+    public Location getLocation(Player p) {
+        for (String string : civUtils.teamCache) {
+            String perm = "civ.team."+string;
+            if (p.hasPermission(perm)) {
+                try {
                     double x = config.getDouble(string+".x");
                     double y = config.getDouble(string+".y");
                     double z = config.getDouble(string+".z");
                     Bukkit.createWorld(new WorldCreator(config.getString(string+".world")));
                     World world = Bukkit.getWorld(config.getString(string+".world"));
                     Location loc = new Location(world,x,y,z);
-                    p.teleport(loc);
-                    break;
+                    return loc;
+                } catch (Exception e) {
+                    Bukkit.getLogger().severe("So basically the config is messed up so the tp corrds are sadge. Error below:");
+                    Bukkit.getLogger().severe(e.getMessage());
+                    return new Location(p.getWorld(),0,-64,0);
                 }
+            }
+        }
+        return new Location(p.getWorld(),p.getLocation().getX(),p.getLocation().getY(),p.getLocation().getZ());
+    }
 
+    public void TeleportPlayer(Player p) {
+        for (String string : civUtils.teamCache) {
+            // just sets the permission node needed beforehand
+            // cause for some reaosn its unreliable otherwise
+            String perm = "civ.team."+string;
+            if (p.hasPermission(perm)) {
+                // Adds a tag for commands or stuff do do mid event for each team.
+                p.addScoreboardTag(string);
+                // Just grabs the coords and tps people it aint that much
+                p.teleport(getLocation(p));
+                break;
             }
 
         }
-
     }
 
 }
