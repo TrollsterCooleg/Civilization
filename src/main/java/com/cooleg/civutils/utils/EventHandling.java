@@ -102,6 +102,7 @@ public class EventHandling implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         try {
             if (civUtils.getConfig().getBoolean("options.KickOnDeath")) {
+                event.getEntity().getInventory().clear();
                 event.getEntity().getPlayer().kickPlayer(ChatColor.RED + "You died...");
             }
             if (civUtils.getConfig().getBoolean("options.UnWhitelistOnDeath")) {
