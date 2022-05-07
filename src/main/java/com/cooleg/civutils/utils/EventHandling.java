@@ -37,7 +37,7 @@ public class EventHandling implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
         if (!civUtils.getConfig().getBoolean("options.ForcedSpawnPoint")) {return;}
-        e.setRespawnLocation(civUtils.distribute.getLocation(e.getPlayer()));
+        e.setRespawnLocation(civUtils.distribute.getLocation(e.getPlayer(), false));
     }
 
     @EventHandler

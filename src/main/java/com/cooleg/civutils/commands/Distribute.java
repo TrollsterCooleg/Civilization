@@ -27,7 +27,7 @@ public class Distribute {
         }
     }
 
-    public Location getLocation(Player p) {
+    public Location getLocation(Player p, Boolean b) {
         for (String string : civUtils.teamCache) {
             String perm = "civ.team."+string;
             if (p.hasPermission(perm)) {
@@ -38,11 +38,12 @@ public class Distribute {
                     Bukkit.createWorld(new WorldCreator(config.getString(string+".world")));
                     World world = Bukkit.getWorld(config.getString(string+".world"));
                     Location loc = new Location(world,x,y,z);
+                    if (b) {p.teleport(loc);}
                     return loc;
                 } catch (Exception e) {
                     Bukkit.getLogger().severe("So basically the config is messed up so the tp corrds are sadge. Error below:");
                     Bukkit.getLogger().severe(e.getMessage());
-                    return new Location(p.getWorld(),0,-64,0);
+                    return new Location(p.getWorld(),p.getLocation().getX(),p.getLocation().getY(),p.getLocation().getZ());
                 }
             }
         }
@@ -50,19 +51,7 @@ public class Distribute {
     }
 
     public void TeleportPlayer(Player p) {
-        for (String string : civUtils.teamCache) {
-            // just sets the permission node needed beforehand
-            // cause for some reaosn its unreliable otherwise
-            String perm = "civ.team."+string;
-            if (p.hasPermission(perm)) {
-                // Adds a tag for commands or stuff do do mid event for each team.
-                p.addScoreboardTag(string);
-                // Just grabs the coords and tps people it aint that much
-                p.teleport(getLocation(p));
-                break;
-            }
-
-        }
+        getLocation(p, true);
+        return;
     }
-
 }
