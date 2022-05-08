@@ -26,6 +26,7 @@ public class SetPos {
             civUtils.getConfig().set("teams."+args[1]+".z", p.getLocation().getBlockZ());
             civUtils.getConfig().set("teams."+args[1]+".world", p.getLocation().getWorld().getName());
             civUtils.saveConfig();
+            civUtils.teamCache.add(args[1]);
             return;
         }
         return;
