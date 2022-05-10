@@ -32,7 +32,7 @@ public class TeamAssign {
                     teamIterator = civUtils.teamCache.iterator();
                     team = teamIterator.next();
                 }
-
+                assign(p, team);
             }
         }
     }

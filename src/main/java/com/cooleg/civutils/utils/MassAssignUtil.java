@@ -79,6 +79,7 @@ public class MassAssignUtil implements Listener {
                 PersistentDataContainer contain = item.getItemMeta().getPersistentDataContainer();
                 NamespacedKey key = NamespacedKey.fromString("team", civUtils);
                 entering.put(e.getWhoClicked().getUniqueId(), contain.get(key, PersistentDataType.STRING));
+                e.getWhoClicked().sendMessage(ChatColor.GOLD + "Send a players username to add them to the group, and type ? to stop.");
                 e.getView().close();
             }
             e.setCancelled(true);

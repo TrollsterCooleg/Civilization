@@ -28,7 +28,7 @@ public class CivCmd implements CommandExecutor {
         if (sender instanceof Player && !sender.hasPermission("civ.commands")) {return false;}
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.GOLD + "The commands are distribute, setpos, pvp, manage, border, or reload.");
+            sender.sendMessage(ChatColor.GOLD + "The commands are distribute, assignall, massassign, manage, border, pvp, setpos, or reload.");
             return false;
         }
         // Ahhh big ugly spagetti
@@ -53,7 +53,7 @@ public class CivCmd implements CommandExecutor {
                 if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled! (Unless it sent an error)");} else {borderUtils.startBorder(((Player) sender).getPlayer()); sender.sendMessage(ChatColor.GOLD + "Border enabled! (Unless it sent an error)");}
                 break;
             case ("help"):
-                sender.sendMessage("The commands are distribute, setpos, or reload.");
+                sender.sendMessage("The commands are distribute, assignall, massassign, manage, border, pvp, setpos, or reload.");
                 break;
             case ("distribute"):
                 Distribute distribute = new com.cooleg.civutils.commands.Distribute(civUtils);
