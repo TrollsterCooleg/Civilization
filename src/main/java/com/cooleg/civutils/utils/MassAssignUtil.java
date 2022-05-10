@@ -10,6 +10,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
@@ -69,6 +70,10 @@ public class MassAssignUtil implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_GREEN + "Assign To Groups") && e.getCurrentItem() != null) {
+            if (e.getRawSlot() > 53) {e.setCancelled(true); return;}
+            if (e.getClick() == ClickType.SWAP_OFFHAND) {
+                e.getWhoClicked().getInventory().setItemInOffHand(e.getWhoClicked().getInventory().getItemInOffHand());
+            }
             ItemStack item = e.getCurrentItem();
             if (item.getType().equals(Material.ARROW)) {
                 PersistentDataContainer contain = item.getItemMeta().getPersistentDataContainer();
