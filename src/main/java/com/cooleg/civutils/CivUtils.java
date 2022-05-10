@@ -5,21 +5,24 @@ import com.cooleg.civutils.commands.TeamAssign;
 import com.cooleg.civutils.utils.BlockedCrafts;
 import com.cooleg.civutils.utils.BorderUtils;
 import com.cooleg.civutils.utils.EventHandling;
+import com.cooleg.civutils.utils.MassAssignUtil;
 import jdk.nashorn.internal.ir.Block;
 import net.luckperms.api.LuckPerms;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
+import org.checkerframework.checker.units.qual.Mass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public final class CivUtils extends JavaPlugin {
+public class CivUtils extends JavaPlugin {
 
     // Preps variables, such as border being on or off, the team cache,
     // and also sets a variable for the borderUtils class beforehand conveniently
@@ -30,11 +33,13 @@ public final class CivUtils extends JavaPlugin {
     public Distribute distribute;
     public BlockedCrafts blockedCrafts;
     public TeamAssign teamAssign;
-    public LuckPerms api;
+    public MassAssignUtil massAssignUtil;
+    public static Permission perms = null;
     public List<Material> items = new ArrayList<>();
 
     @Override
     public void onEnable() {
+        setupPermissions();
         // Important Startup
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -49,9 +54,8 @@ public final class CivUtils extends JavaPlugin {
         teamAssign = new TeamAssign(this);
         blockedCrafts = new BlockedCrafts(this);
         blockedCrafts.refreshList();
-        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-        if (provider != null) {api = provider.getProvider();}
         Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);
+        Bukkit.getPluginManager().registerEvents(massAssignUtil = new MassAssignUtil(this), this);
         getCommand("civutils").setExecutor(new CivCmd(this,borderUtils,teamAssign));
         try {
             for (String string : (List<String>) getConfig().getList("worlds")) {
@@ -71,6 +75,12 @@ public final class CivUtils extends JavaPlugin {
         for (World world : Bukkit.getWorlds()) {
             world.setPVP(pvp);
         }
+    }
+
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
     }
 
     @Override

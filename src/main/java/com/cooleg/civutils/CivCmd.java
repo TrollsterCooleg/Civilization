@@ -63,6 +63,9 @@ public class CivCmd implements CommandExecutor {
             case ("setpos"):
                 if (sender instanceof Player) {new com.cooleg.civutils.commands.SetPos(args,civUtils, ((Player) sender).getPlayer()); sender.sendMessage(ChatColor.GOLD + "Position Set!");}
                 break;
+            case ("massassign"):
+                if (sender instanceof Player) {civUtils.massAssignUtil.openGui(((Player) sender).getPlayer());};
+                break;
             case ("reload"):
                 civUtils.reloadConfig();
                 civUtils.curing = civUtils.getConfig().getBoolean("options.villagers");
