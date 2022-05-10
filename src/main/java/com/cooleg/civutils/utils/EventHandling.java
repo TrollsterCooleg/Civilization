@@ -10,16 +10,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.WorldCreator;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ZombieVillager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -97,7 +100,6 @@ public class EventHandling implements Listener {
         }
         return;
     }
-
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         try {
@@ -113,6 +115,14 @@ public class EventHandling implements Listener {
         }
         return;
 
+    }
+
+    @EventHandler
+    public void disableCure(PlayerInteractEntityEvent e) {
+        if (civUtils.curing) {return;}
+        if (e.getRightClicked() instanceof ZombieVillager) {
+            e.setCancelled(true);
+        }
     }
 
 }

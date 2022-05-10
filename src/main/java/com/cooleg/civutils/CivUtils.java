@@ -24,6 +24,7 @@ public final class CivUtils extends JavaPlugin {
     // Preps variables, such as border being on or off, the team cache,
     // and also sets a variable for the borderUtils class beforehand conveniently
     public boolean border = false;
+    public boolean curing = false;
     public Set<String> teamCache;
     public BorderUtils borderUtils;
     public Distribute distribute;
@@ -37,6 +38,7 @@ public final class CivUtils extends JavaPlugin {
         // Important Startup
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+        curing = getConfig().getBoolean("options.villagers");
         try {
             teamCache = this.getConfig().getConfigurationSection("teams").getKeys(false);
         } catch (Exception e) {

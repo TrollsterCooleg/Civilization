@@ -65,6 +65,8 @@ public class CivCmd implements CommandExecutor {
                 break;
             case ("reload"):
                 civUtils.reloadConfig();
+                civUtils.curing = civUtils.getConfig().getBoolean("options.villagers");
+
                 civUtils.blockedCrafts.refreshList();
                 boolean pvp;
                 try {

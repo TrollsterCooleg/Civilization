@@ -7,5 +7,6 @@ options:
   UnWhitelistOnDeath: false
   PVP: true
   ForcedSpawnPoint: false
+  villagers: false;
 
 worlds:
