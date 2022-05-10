@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.entity.EntityTransformEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -118,11 +119,10 @@ public class EventHandling implements Listener {
     }
 
     @EventHandler
-    public void disableCure(PlayerInteractEntityEvent e) {
+    public void curePatch(EntityTransformEvent e) {
         if (civUtils.curing) {return;}
-        if (e.getRightClicked() instanceof ZombieVillager) {
+        if (e.getTransformReason() == EntityTransformEvent.TransformReason.CURED) {
             e.setCancelled(true);
         }
     }
-
 }
