@@ -47,6 +47,9 @@ public class TeamAssign {
                 }
             }
             if (!hasGroup) {return;}
+            for (String t : perms.getPlayerGroups(null, p)) {
+                perms.playerRemoveGroup(null, p, t);
+            }
             perms.playerAddGroup(null, p, team);
         } catch (Exception e) {
             Bukkit.getLogger().severe("You have some sorta team in your config.yml that doesnt exist in luckperms.");
