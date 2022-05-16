@@ -107,7 +107,7 @@ public class EventHandling implements Listener {
     @EventHandler
     public void guiOpen(InventoryOpenEvent event) {
         if (civUtils.curing) {return;}
-        if (event.getInventory().getType() == InventoryType.WORKBENCH) {
+        if (event.getInventory().getType() == InventoryType.MERCHANT) {
             event.setCancelled(true);
         }
     }
