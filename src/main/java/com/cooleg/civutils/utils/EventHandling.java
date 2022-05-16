@@ -22,6 +22,8 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityTransformEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -101,6 +103,15 @@ public class EventHandling implements Listener {
         }
         return;
     }
+
+    @EventHandler
+    public void guiOpen(InventoryOpenEvent event) {
+        if (civUtils.curing) {return;}
+        if (event.getInventory().getType() == InventoryType.WORKBENCH) {
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         try {

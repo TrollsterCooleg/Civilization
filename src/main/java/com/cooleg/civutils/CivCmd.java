@@ -66,6 +66,11 @@ public class CivCmd implements CommandExecutor {
             case ("massassign"):
                 if (sender instanceof Player) {civUtils.massAssignUtil.openGui(((Player) sender).getPlayer());};
                 break;
+            case ("exile"):
+                if (args.length == 2) {
+                    civUtils.teamAssign.assign(Bukkit.getOfflinePlayer(args[1]), "exile");
+                }
+                break;
             case ("reload"):
                 civUtils.reloadConfig();
                 civUtils.curing = civUtils.getConfig().getBoolean("options.villagers");
