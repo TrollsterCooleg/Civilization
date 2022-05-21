@@ -76,13 +76,15 @@ public class PvpToggle {
     }
 
     public void PvpToggle(Player p, CivUtils civUtils) {
-        if (p.getWorld().getPVP() == true) {
+        if (civUtils.getPvp() == true) {
+            civUtils.setPvp(false);
             for (World world : Bukkit.getWorlds()) {
                 world.setPVP(false);
                 civUtils.getConfig().set("options.PVP", false);
                 civUtils.saveConfig();
             }
         } else {
+            civUtils.setPvp(true);
             for (World world : Bukkit.getWorlds()) {
                 world.setPVP(true);
                 civUtils.getConfig().set("options.PVP", true);

@@ -84,6 +84,7 @@ public class CivCmd implements CommandExecutor {
                     civUtils.saveConfig();
                     pvp = true;
                 }
+                civUtils.setPvp(pvp);
                 for (World world : Bukkit.getWorlds()) {
                     world.setPVP(pvp);
                 }

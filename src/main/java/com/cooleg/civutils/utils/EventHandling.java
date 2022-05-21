@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.ZombieVillager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityTransformEvent;
@@ -40,6 +41,12 @@ public class EventHandling implements Listener {
         this.civUtils = civUtils;
     }
 
+    @EventHandler
+    public void lava(PlayerBucketEmptyEvent event) {
+        if ((event.getBucket() == Material.LAVA_BUCKET) && (!civUtils.getPvp())) {
+            event.setCancelled(true);
+        }
+    }
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
         if (!civUtils.getConfig().getBoolean("options.ForcedSpawnPoint")) {return;}

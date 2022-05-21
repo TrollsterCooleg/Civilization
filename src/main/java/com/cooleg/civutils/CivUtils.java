@@ -36,6 +36,7 @@ public class CivUtils extends JavaPlugin {
     public MassAssignUtil massAssignUtil;
     public static Permission perms = null;
     public List<Material> items = new ArrayList<>();
+    boolean pvp;
 
     @Override
     public void onEnable() {
@@ -64,7 +65,6 @@ public class CivUtils extends JavaPlugin {
         } catch (Exception e) {
             getLogger().severe("Your worlds list is empty. Ignore this if you are using the default world for your event, but make sure that you add the worlds you need that arent the default world to the worlds list in the config.yml.");
         }
-        boolean pvp;
         try {
             pvp = getConfig().getBoolean("options.PVP");
         } catch (Exception e) {
@@ -86,6 +86,14 @@ public class CivUtils extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    public boolean getPvp() {
+        return pvp;
+    }
+
+    public void setPvp(Boolean pvp) {
+        this.pvp = pvp;
     }
 
 }
