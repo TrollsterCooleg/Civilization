@@ -38,7 +38,10 @@ public class Distribute {
                     Bukkit.createWorld(new WorldCreator(config.getString(string+".world")));
                     World world = Bukkit.getWorld(config.getString(string+".world"));
                     Location loc = new Location(world,x,y,z);
-                    if (b) {p.teleport(loc);}
+                    if (b) {
+                        p.teleport(loc);
+                        p.addScoreboardTag(string);
+                    }
                     return loc;
                 } catch (Exception e) {
                     Bukkit.getLogger().severe("So basically the config is messed up so the tp corrds are sadge. Error below:");
