@@ -45,6 +45,12 @@ public class CivCmd implements CommandExecutor {
                     new com.cooleg.civutils.commands.PvpToggle().pvpGui(((Player) sender).getPlayer());
                 }
                 break;
+            case ("singletp"):
+                try {
+                    new Distribute(civUtils).TeleportPlayer(Bukkit.getPlayer(args[1]));
+                } catch (Exception e) {
+                    // Nothing here too lazy
+                }
             case ("assignall"):
                 civUtils.teamAssign.AssignAll();
                 break;
