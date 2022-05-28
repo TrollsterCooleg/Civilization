@@ -76,6 +76,7 @@ public class BorderUtils {
                 for (String string : civUtils.teamCache) {
                     String perm = "civ.team."+string;
                     for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.hasPermission("civ.exclude")) {return;}
                         if (p.hasPermission(perm)) {
                             Location playerLocation = p.getLocation();
                             if (playerLocation.getBlockX() < lowXMap.get(string)) {
