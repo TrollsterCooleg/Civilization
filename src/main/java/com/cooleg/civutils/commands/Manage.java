@@ -9,111 +9,58 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 public class Manage {
 
+    private static ItemStack borderOn = new ItemStack(Material.GREEN_CONCRETE);
+    private static ItemStack borderOff = new ItemStack(Material.RED_CONCRETE);
+
+    static {
+        ItemMeta borderOnMeta = borderOn.getItemMeta();
+        borderOnMeta.setDisplayName(ChatColor.GREEN + "The border is currently enabled!");
+        borderOnMeta.setLore(Collections.singletonList("Click to disable the border."));
+        borderOn.setItemMeta(borderOnMeta);
+        ItemMeta borderOffMeta = borderOff.getItemMeta();
+        borderOffMeta.setDisplayName(ChatColor.GREEN + "The border is currently disabled!");
+        borderOffMeta.setLore(Collections.singletonList("Click to enable the border."));
+        borderOff.setItemMeta(borderOffMeta);
+    }
+
     public void managerGui(Player player, CivUtils civUtils) {
         Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_GREEN + "Manager");
-        ItemStack pvptoggle;
-        ItemStack bordertoggle;
-        ItemMeta meta;
-        ItemStack filter = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemMeta filtermeta = filter.getItemMeta();
-        filtermeta.setDisplayName(" ");
-        filter.setItemMeta(filtermeta);
         for (int i = 0; i < 9; i++) {
-            inv.setItem(i, filter);
+            inv.setItem(i, PvpToggle.filler);
         }
         if (player.getWorld().getPVP()) {
-            pvptoggle = new ItemStack(Material.GREEN_CONCRETE);
-            meta = pvptoggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently enabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to disable PVP");
-            meta.setLore(loreList);
-            pvptoggle.setItemMeta(meta);
+            inv.setItem(3, PvpToggle.pvpOn);
         } else {
-            pvptoggle = new ItemStack(Material.RED_CONCRETE);
-            meta = pvptoggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently disabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to enable PVP");
-            meta.setLore(loreList);
-            pvptoggle.setItemMeta(meta);
+            inv.setItem(3, PvpToggle.pvpOff);
         }
-        inv.setItem(3, pvptoggle);
         if (civUtils.border) {
-            bordertoggle = new ItemStack(Material.GREEN_CONCRETE);
-            meta = bordertoggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "The border is currently enabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to disable the border.");
-            meta.setLore(loreList);
-            bordertoggle.setItemMeta(meta);
+            inv.setItem(5, borderOn);
         } else {
-            bordertoggle = new ItemStack(Material.RED_CONCRETE);
-            meta = bordertoggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "The border is currently disabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to enable the border.");
-            meta.setLore(loreList);
-            bordertoggle.setItemMeta(meta);
+            inv.setItem(5, borderOff);
         }
-        inv.setItem(5, bordertoggle);
 
         player.openInventory(inv);
     }
 
     public void UpdateBorder (InventoryClickEvent e, CivUtils civUtils) {
-        ItemStack toggle;
-        ItemMeta meta;
         if (civUtils.border) {
-            toggle = new ItemStack(Material.GREEN_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "The border is currently enabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to disable the border.");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            e.getInventory().setItem(5, borderOn);
         } else {
-            toggle = new ItemStack(Material.RED_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "The border is currently disabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to enable the border.");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            e.getInventory().setItem(5, borderOff);
         }
-
-        e.getInventory().setItem(5, toggle);
 
     }
 
     public void UpdatePvp (Player player, InventoryClickEvent e) {
-        ItemStack toggle;
-        ItemMeta meta;
         if (player.getWorld().getPVP()) {
-            toggle = new ItemStack(Material.GREEN_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently enabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to disable PVP");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            e.getInventory().setItem(3, PvpToggle.pvpOn);
         } else {
-            toggle = new ItemStack(Material.RED_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently disabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to enable PVP");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            e.getInventory().setItem(3, PvpToggle.pvpOff);
         }
-
-        e.getInventory().setItem(3, toggle);
 
     }
 

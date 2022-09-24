@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -15,63 +16,44 @@ import java.util.*;
 
 public class PvpToggle {
 
+    public static ItemStack pvpOn = new ItemStack(Material.GREEN_CONCRETE);
+    public static ItemStack pvpOff = new ItemStack(Material.RED_CONCRETE);
+    public static ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+
+    static {
+        ItemMeta pvpOnMeta = pvpOn.getItemMeta();
+        pvpOnMeta.setDisplayName(ChatColor.GREEN + "PVP is currently enabled!");
+        pvpOnMeta.setLore(Collections.singletonList("Click to disable PVP"));
+        pvpOn.setItemMeta(pvpOnMeta);
+        ItemMeta pvpOffMeta = pvpOff.getItemMeta();
+        pvpOffMeta.setDisplayName(ChatColor.GREEN + "PVP is currently disabled!");
+        pvpOffMeta.setLore(Collections.singletonList("Click to enable PVP"));
+        pvpOff.setItemMeta(pvpOffMeta);
+        ItemMeta fillerMeta = filler.getItemMeta();
+        fillerMeta.setDisplayName(" ");
+        filler.setItemMeta(fillerMeta);
+    }
+
     public void pvpGui(Player player) {
         Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_GREEN + "PVP Menu");
-        ItemStack toggle;
-        ItemMeta meta;
-        ItemStack filter = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemMeta filtermeta = filter.getItemMeta();
-        filtermeta.setDisplayName(" ");
-        filter.setItemMeta(filtermeta);
         for (int i = 0; i < 9; i++) {
-            inv.setItem(i, filter);
+            inv.setItem(i, filler);
         }
         if (player.getWorld().getPVP()) {
-            toggle = new ItemStack(Material.GREEN_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently enabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to disable PVP");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            inv.setItem(4, pvpOn);
         } else {
-            toggle = new ItemStack(Material.RED_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently disabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to enable PVP");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            inv.setItem(4, pvpOff);
         }
 
-        inv.setItem(4, toggle);
-
         player.openInventory(inv);
-
     }
 
     public void UpdateInventory (Player player, InventoryClickEvent e) {
-        ItemStack toggle;
-        ItemMeta meta;
         if (player.getWorld().getPVP()) {
-            toggle = new ItemStack(Material.GREEN_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently enabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to disable PVP");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            e.getInventory().setItem(4, pvpOn);
         } else {
-            toggle = new ItemStack(Material.RED_CONCRETE);
-            meta = toggle.getItemMeta();
-            meta.setDisplayName(ChatColor.GREEN + "PVP is currently disabled!");
-            List<String> loreList = new ArrayList<>();
-            loreList.add("Click to enable PVP");
-            meta.setLore(loreList);
-            toggle.setItemMeta(meta);
+            e.getInventory().setItem(4, pvpOff);
         }
-
-        e.getInventory().setItem(4, toggle);
 
     }
 

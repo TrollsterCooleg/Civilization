@@ -20,8 +20,6 @@ public class TeamAssign {
     }
 
     public void AssignAll() {
-        int current = 0;
-        int teams = civUtils.teamCache.size();
         String team;
         Iterator<String> teamIterator = civUtils.teamCache.iterator();
         for (Player p : Bukkit.getOnlinePlayers()) {

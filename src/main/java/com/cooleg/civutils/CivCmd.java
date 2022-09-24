@@ -28,8 +28,8 @@ public class CivCmd implements CommandExecutor {
         if (sender instanceof Player && !sender.hasPermission("civ.commands")) {return false;}
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.GOLD + "The commands are distribute, assignall, massassign, manage, border, pvp, setpos, or reload.");
-            return false;
+            sender.sendMessage(ChatColor.GOLD + "The commands are distribute, assign, assignall, massassign, manage, border, pvp, setpos, or reload.");
+            return true;
         }
         // Ahhh big ugly spagetti
         // at least i used .toLowerCase
@@ -45,12 +45,22 @@ public class CivCmd implements CommandExecutor {
                     new com.cooleg.civutils.commands.PvpToggle().pvpGui(((Player) sender).getPlayer());
                 }
                 break;
+            case ("assign"):
+                if (args.length == 2) {
+                    try {
+                        civUtils.teamAssign.assign(Bukkit.getOfflinePlayer(args[0]), args[1]);
+                    } catch (Exception e) {
+                        sender.sendMessage("Yeah okay so smthn went wrong heehee");
+                    }
+                }
+                break;
             case ("singletp"):
                 try {
                     new Distribute(civUtils).TeleportPlayer(Bukkit.getPlayer(args[1]));
                 } catch (Exception e) {
                     // Nothing here too lazy
                 }
+                break;
             case ("assignall"):
                 civUtils.teamAssign.AssignAll();
                 break;
@@ -104,6 +114,6 @@ public class CivCmd implements CommandExecutor {
                 break;
         }
 
-        return false;
+        return true;
     }
 }
