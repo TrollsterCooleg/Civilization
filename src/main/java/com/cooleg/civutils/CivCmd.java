@@ -101,6 +101,8 @@ public class CivCmd implements CommandExecutor {
                     pvp = true;
                 }
                 civUtils.setPvp(pvp);
+                civUtils.kick = civUtils.getConfig().getBoolean("options.KickOnDeath");
+                civUtils.unWl = civUtils.getConfig().getBoolean("options.UnWhitelistOnDeath");
                 for (World world : Bukkit.getWorlds()) {
                     world.setPVP(pvp);
                 }

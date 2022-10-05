@@ -21,6 +21,8 @@ public class CivUtils extends JavaPlugin {
     // and also sets a variable for the borderUtils class beforehand conveniently
     public boolean border = false;
     public boolean curing = false;
+    public boolean kick = false;
+    public boolean unWl = false;
     public Set<String> teamCache;
     public BorderUtils borderUtils;
     public Distribute distribute;
@@ -47,6 +49,8 @@ public class CivUtils extends JavaPlugin {
         distribute = new Distribute(this);
         teamAssign = new TeamAssign(this);
         blockedCrafts = new BlockedCrafts(this);
+        kick = getConfig().getBoolean("options.KickOnDeath");
+        unWl = getConfig().getBoolean("options.UnWhitelistOnDeath");
         blockedCrafts.refreshList();
         Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);
         Bukkit.getPluginManager().registerEvents(massAssignUtil = new MassAssignUtil(this), this);
