@@ -96,6 +96,7 @@ public class EventHandling implements Listener {
             e.setCancelled(true);
         }
         if (ChatColor.translateAlternateColorCodes('&', e.getView().getTitle()).equals(ChatColor.DARK_GREEN + "Manager") && e.getCurrentItem() != null) {
+            /*
             if (e.getRawSlot() == 5) {
                 if (civUtils.border) {
                     civUtils.borderUtils.stopBorder();
@@ -106,6 +107,8 @@ public class EventHandling implements Listener {
                 Manage manage = new Manage();
                 manage.UpdateBorder(e, civUtils);
             }
+            */
+            e.getWhoClicked().sendMessage("Border stuff disabled because its annoying and hard to use. Use worldguard please.");
             e.setCancelled(true);
         }
         return;

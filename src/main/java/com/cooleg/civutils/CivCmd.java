@@ -14,11 +14,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class CivCmd implements CommandExecutor {
     private CivUtils civUtils;
-    private BorderUtils borderUtils;
     private TeamAssign teamAssign;
-    public CivCmd(CivUtils civUtils, BorderUtils borderUtils, TeamAssign teamAssign) {
+    public CivCmd(CivUtils civUtils, TeamAssign teamAssign) {
         this.civUtils = civUtils;
-        this.borderUtils = borderUtils;
         this.teamAssign = teamAssign;
     }
 
@@ -65,8 +63,12 @@ public class CivCmd implements CommandExecutor {
                 civUtils.teamAssign.AssignAll();
                 break;
             case ("border"):
+                /*
                 if (!(sender instanceof Player)) {sender.sendMessage("This command must be ran as a player"); break;}
                 if (civUtils.border) {borderUtils.stopBorder(); sender.sendMessage(ChatColor.GOLD + "Border disabled! (Unless it sent an error)");} else {borderUtils.startBorder(((Player) sender).getPlayer()); sender.sendMessage(ChatColor.GOLD + "Border enabled! (Unless it sent an error)");}
+                break;
+                */
+                sender.sendMessage("Command disabled because its annoying to actually fix and bugtest and very manual. its just not worth it man. use worldguard like a normal human being");
                 break;
             case ("help"):
                 sender.sendMessage("The commands are distribute, assignall, massassign, manage, border, pvp, setpos, or reload.");

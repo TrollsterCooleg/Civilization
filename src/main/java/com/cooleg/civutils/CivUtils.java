@@ -24,7 +24,6 @@ public class CivUtils extends JavaPlugin {
     public boolean kick = false;
     public boolean unWl = false;
     public Set<String> teamCache;
-    public BorderUtils borderUtils;
     public Distribute distribute;
     public BlockedCrafts blockedCrafts;
     public TeamAssign teamAssign;
@@ -45,7 +44,6 @@ public class CivUtils extends JavaPlugin {
         } catch (Exception e) {
             this.getLogger().severe("Somethings wrong in the config.yml");
         }
-        borderUtils = new BorderUtils(this);
         distribute = new Distribute(this);
         teamAssign = new TeamAssign(this);
         blockedCrafts = new BlockedCrafts(this);
@@ -54,7 +52,7 @@ public class CivUtils extends JavaPlugin {
         blockedCrafts.refreshList();
         Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);
         Bukkit.getPluginManager().registerEvents(massAssignUtil = new MassAssignUtil(this), this);
-        getCommand("civutils").setExecutor(new CivCmd(this,borderUtils,teamAssign));
+        getCommand("civutils").setExecutor(new CivCmd(this,teamAssign));
         getCommand("civutils").setTabCompleter(new CivCompleter());
         try {
             for (String string : (List<String>) getConfig().getList("worlds")) {
