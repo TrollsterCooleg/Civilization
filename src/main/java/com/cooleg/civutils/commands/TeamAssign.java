@@ -1,9 +1,6 @@
 package com.cooleg.civutils.commands;
 
 import com.cooleg.civutils.CivUtils;
-import net.luckperms.api.model.group.Group;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

@@ -1,7 +1,6 @@
 package com.cooleg.civutils.commands;
 
 import com.cooleg.civutils.CivUtils;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public class SetPos {

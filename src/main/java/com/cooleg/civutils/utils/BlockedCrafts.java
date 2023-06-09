@@ -3,10 +3,6 @@ package com.cooleg.civutils.utils;
 import com.cooleg.civutils.CivUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemFactory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;

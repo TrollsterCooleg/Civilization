@@ -3,9 +3,9 @@ package com.cooleg.civutils;
 import com.cooleg.civutils.commands.Distribute;
 import com.cooleg.civutils.commands.TeamAssign;
 import com.cooleg.civutils.utils.BlockedCrafts;
-import com.cooleg.civutils.utils.BorderUtils;
 import com.cooleg.civutils.utils.EventHandling;
 import com.cooleg.civutils.utils.MassAssignUtil;
+import me.cooleg.easycommands.CommandRegistry;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -52,8 +52,8 @@ public class CivUtils extends JavaPlugin {
         blockedCrafts.refreshList();
         Bukkit.getPluginManager().registerEvents(new EventHandling(this), this);
         Bukkit.getPluginManager().registerEvents(massAssignUtil = new MassAssignUtil(this), this);
-        getCommand("civutils").setExecutor(new CivCmd(this,teamAssign));
-        getCommand("civutils").setTabCompleter(new CivCompleter());
+        //getCommand("civutils").setExecutor(new CivCmd(this,teamAssign));
+        //getCommand("civutils").setTabCompleter(new CivCompleter());
         try {
             for (String string : (List<String>) getConfig().getList("worlds")) {
                 Bukkit.createWorld(new WorldCreator(string));
@@ -71,6 +71,9 @@ public class CivUtils extends JavaPlugin {
         for (World world : Bukkit.getWorlds()) {
             world.setPVP(pvp);
         }
+
+        CommandRegistry registry = new CommandRegistry();
+        registry.registerCommand(new CivCmd(this, teamAssign));
     }
 
     private boolean setupPermissions() {

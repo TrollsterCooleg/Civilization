@@ -1,8 +1,6 @@
 package com.cooleg.civutils.utils;
 
 import com.cooleg.civutils.CivUtils;
-import com.cooleg.civutils.commands.PvpToggle;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,10 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import static com.cooleg.civutils.CivUtils.perms;
